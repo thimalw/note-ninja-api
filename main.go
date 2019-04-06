@@ -4,12 +4,19 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+
+	"github.com/thimalw/note-ninja-api/internal/config"
 )
 
 func main() {
-	r := routes()
+	conf, err := config.New()
+	if err != nil {
+		log.Panicln("Configuration error.", err)
+	}
+
+	r := routes(conf.Database)
 
 	// TODO: Get port from env var
-	fmt.Println("Server listening on port 3080")
-	log.Fatal(http.ListenAndServe(":3080", r))
+	fmt.Println("Server listening on port: " + conf.Constants.PORT)
+	log.Fatal(http.ListenAndServe(":"+conf.Constants.PORT, r))
 }

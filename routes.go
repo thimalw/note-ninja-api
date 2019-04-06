@@ -1,13 +1,14 @@
 package main
 
 import (
+	"github.com/globalsign/mgo"
 	"github.com/go-chi/chi"
 	"github.com/go-chi/chi/middleware"
 	"github.com/go-chi/render"
 	"github.com/thimalw/note-ninja-api/user"
 )
 
-func routes() *chi.Mux {
+func routes(db *mgo.Database) *chi.Mux {
 	r := chi.NewRouter()
 	r.Use(
 		render.SetContentType(render.ContentTypeJSON),
@@ -18,7 +19,7 @@ func routes() *chi.Mux {
 	)
 
 	r.Route("/v1", func(r chi.Router) {
-		r.Mount("/user", user.Routes())
+		r.Mount("/user", user.Routes(db))
 	})
 
 	return r

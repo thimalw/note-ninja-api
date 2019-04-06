@@ -1,0 +1,4 @@
+PORT=3080
+[Mongo]
+  URL = "localhost:27017"
+  DBName = "noteninja"
